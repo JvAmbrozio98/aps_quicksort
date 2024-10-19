@@ -37,7 +37,7 @@ except ValueError:
     sys.exit(1)
 
 # Gera uma lista de números aleatórios com o tamanho fornecido
-lista_numeros = [random.randint(0, 50000) for _ in range(tamanho_lista)]
+lista_numeros = [random.randint(0, 100000000) for _ in range(tamanho_lista)]
 
 # Medir o tempo de execução do Shell Sort
 inicio_tempo = time.time()
