@@ -27,3 +27,22 @@ tar -czvf saidas_bubblesort.tar.gz bubblesort_output_*.txt
 tar -czvf saidas_shellsort.tar.gz shellsort_output_*.txt
 
 echo "Arquivos compactados com sucesso."
+
+echo "Arquivos compactados com sucesso."
+
+# Criação dos buckets S3 com verificação
+for bucket_name in "unip-aps-quicksort" "unip-aps-bubblesort" "unip-aps-shellsort"; do
+    if aws s3api head-bucket --bucket $bucket_name 2>/dev/null; then
+        echo "Bucket $bucket_name já existe, pulando criação..."
+    else
+        aws s3api create-bucket --bucket $bucket_name --region us-east-1
+        echo "Bucket $bucket_name criado com sucesso."
+    fi
+done
+
+# Upload dos arquivos para os respectivos buckets
+aws s3 cp saidas_quicksort.tar.gz s3://unip-aps-quicksort/
+aws s3 cp saidas_bubblesort.tar.gz s3://unip-aps-bubblesort/
+aws s3 cp saidas_shellsort.tar.gz s3://unip-aps-shellsort/
+
+echo "Arquivos enviados para os buckets no S3 com sucesso."
